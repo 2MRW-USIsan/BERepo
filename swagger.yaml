@@ -1,0 +1,422 @@
+openapi: 3.0.3
+info:
+  title: ACMANI API
+  version: 1.0.0
+  description: ACMANI LABO API
+paths: {}
+components:
+  schemas:
+    Parameters:
+      type: object
+      description: "数値パラメータ Config情報"
+      properties:
+        name:
+          type: string
+          description: "パラメータ名"
+        value:
+          type: integer
+          description: "パラメータ値"
+    PromptsLists:
+      type: object
+      description: "選択リスト Config情報"
+      properties:
+        category:
+          type: string
+          description: "プロンプトリストのカテゴリー"
+          example: "Emotes/Actions/Fluids/Requests"
+        isLewd:
+          type: boolean
+          description: "NSFWフラグ"
+        name:
+          type: string
+          description: "プロンプト情報（キー）"
+        value:
+          type: string
+          description: "プロンプト情報（バリュー）"
+    TextPhrases:
+      type: object
+      description: "テキスト／フレーズ／プロンプト Config情報"
+      properties:
+        headerPrompt:
+          type: string
+          description: "ヘッダープロンプト"
+        footerPrompt:
+          type: string
+          description: "フッタープロンプト"
+        negativePrompt:
+          type: string
+          description: "ネガティブプロンプト"
+        requestOrderPhrase:
+          type: string
+          description: "リクエスト用Chatプロンプト"
+        scenesOrderPhrase:
+          type: string
+          description: "脚本用Chatプロンプト"
+        postingTemplate:
+          type: string
+          description: "投稿用テンプレート"
+    Configs:
+      type: object
+      description: "Config情報"
+      properties:
+        parameters:
+          $ref: '#/components/schemas/Parameters'
+        promptsLists:
+          $ref: '#/components/schemas/PromptsLists'
+        textPhrases:
+          $ref: '#/components/schemas/TextPhrases'
+
+    TaskGroup:
+      type: object
+      description: "タスクのグループ情報"
+      properties:
+        id:
+          type: integer
+          example: "groupID"
+        name:
+          type: string
+          example: "format: YYYY-MM-DD/'YYYY-'MM-'DD"
+    Task:
+      type: object
+      description: "タスク情報"
+      properties:
+        id:
+          type: integer
+          example: "taskID"
+        group_id:
+          type: integer
+          example: "groupID"
+        index:
+          type: integer
+          example: "0~7(Config情報により決定)"
+        name:
+          type: string
+          example: "format: DD-'DD XXth Data"
+
+    Posts:
+      type: object
+      description: "投稿情報"
+      properties:
+        id:
+          type: integer
+          example: "postsID"
+        task_id:
+          type: integer
+          example: "taskID"
+        input_story:
+          type: string
+          example: "ストーリー情報"
+        title_en:
+          type: string
+          example: "タイトル(EN)情報"
+        title_jp:
+          type: string
+          example: "タイトル(JP)情報"
+        title_symbol:
+          type: string
+          example: "タイトル(emoji)情報"
+        pic_size_lewd:
+          type: string
+          example: "枚数情報(Lewd)"
+        pic_size_soft:
+          type: string
+          example: "枚数情報(Soft)"
+        url_lewd:
+          type: string
+          example: "URL情報(Lewd)"
+        url_soft:
+          type: string
+          example: "URL情報(Soft)"
+        her_quotes:
+          type: array
+          example: "X投稿用データリスト"
+          items:
+            type: string
+
+    Prompts:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: "promptsID"
+        task_id:
+          type: integer
+          example: "taskID"
+        basis_line:
+          type: string
+          example: "基本情報プロンプト"
+        faces_line:
+          type: string
+          example: "顔情報プロンプト"
+        bodies_line:
+          type: string
+          example: "体型情報プロンプト"
+        genital_line:
+          type: string
+          example: "性器情報プロンプト"
+        fluids_line:
+          type: string
+          example: "体液情報プロンプト"
+        outfits_line:
+          type: string
+          example: "服装情報プロンプト"
+        scenes_line:
+          type: string
+          example: "背景情報プロンプト"
+        emotes_line:
+          type: string
+          example: "表情情報プロンプト"
+        actions_line:
+          type: string
+          example: "動作情報プロンプト"
+        camera_line:
+          type: string
+          example: "撮影情報プロンプト"
+
+    BASIS:
+      type: object
+      description: "基本構成情報"
+      properties:
+        id:
+          type: integer
+          example: "BasisID"
+        request_id:
+          type: integer
+          example: "requestID"
+
+        theme:
+          type: integer
+          example: "1:人型(女性)2:人型(両性)3:獣人(雌)4:獣人(両性)"
+          description: "テーマ情報"
+        race:
+          type: string
+          example: "ランダムセレクト"
+          description: "人種／動物種情報"
+        species:
+          type: string
+          example: "ＡＩ出力"
+          description: "人なら民族／種族、獣人なら品種／亜種の情報を記載"
+        attributes:
+          type: string
+          example: "ランダムセレクト"
+          description: "属性情報"
+        jobs:
+          type: string
+          example: "ＡＩ出力"
+          description: "職業情報"
+
+        outfits:
+          type: string
+          example: "ＡＩ出力"
+          description: "服装情報"
+        equips:
+          type: string
+          example: "ＡＩ出力"
+          description: "所持品情報"
+
+        period:
+          type: integer
+          example: "1:原始2:古代3:中世4:近代5:現代6:未来"
+          description: "時代情報"
+        period_details:
+          type: string
+          example: "ＡＩ出力"
+          description: "時代詳細情報"
+        weather:
+          type: integer
+          example: "1:室内2:晴天3:曇天4:雨天5:降雪"
+          description: "天候情報"
+        weather_details:
+          type: string
+          example: "ＡＩ出力"
+          description: "天候詳細情報"
+        times:
+          type: integer
+          example: "1:午前から夕方2:午後から夜中3:深夜から明方"
+          description: "時間帯情報"
+        times_details:
+          type: string
+          example: "ＡＩ出力"
+          description: "時間帯詳細情報"
+        location:
+          type: string
+          example: "ＡＩ出力"
+          description: "場所情報"
+    FACES:
+      type: object
+      description: "顔構成情報"
+      properties:
+        id:
+          type: integer
+          example: "FacesID"
+        request_id:
+          type: integer
+          example: "requestID"
+
+        face_looks:
+          type: integer
+          example: "1:若々しい/Girly2:艶やかな/Adult3:成熟した/Mature"
+          description: "顔つき情報"
+        eyes_shape:
+          type: integer
+          example: "1:イト目/narrowed2:ジト目/jitome3:タレ目/tareme4:ツリ目/tsurime"
+          description: "目つき情報"
+        personality:
+          type: integer
+          example: "1:（冷静ｘ内向的）神秘的/Mysterious2:（興奮ｘ内向的）シャイ/Shy3:（冷静ｘ外向的）友好的/Friendly4:（興奮ｘ外向的）活動的/Cheerful"
+          description: "性格情報"
+        mood:
+          type: integer
+          example: "1:（官能的ｘ上品）優雅な/Elegance2:（官能的ｘ狡猾）魅惑的/Seductive3:（無邪気ｘ上品）ロマンティック/Romantic:（無邪気ｘ狡猾）イタズラ/Naughty"
+          description: "雰囲気情報"
+
+        hair_size:
+          type: integer
+          example: "1:ロング2:メディアム3:ショート"
+          description: "毛髪量"
+        bangs_size:
+          type: integer
+          example: "1:ロング2:メディアム3:ショート"
+          description: "前髪量"
+        hair_style:
+          type: integer
+          example: "ＡＩ出力"
+          description: "ヘアスタイル"
+        bangs_style:
+          type: integer
+          example: "ＡＩ出力"
+          description: "前髪スタイル"
+    BODIES:
+      type: object
+      description: "体型構成情報"
+      properties:
+        id:
+          type: integer
+          example: "BodiesID"
+        request_id:
+          type: integer
+          example: "requestID"
+
+        thickness:
+          type: integer
+          example: "1:通常2:太い"
+          description: "太さ"
+        boob_size:
+          type: integer
+          example: "1:巨乳2:爆乳3:超乳"
+          description: "バスト"
+        body_size:
+          type: integer
+          example: "1:スリムorがっしり2:健康的or筋肉質3:ふくよかorぽっちゃり"
+          description: "ウエスト"
+        butt_size:
+          type: integer
+          example: "1:巨尻2:爆尻3:超尻"
+          description: "ヒップ"
+        skin_details:
+          type: string
+          example: "ＡＩ出力"
+          description: "肌特徴"
+
+        areola_size:
+          type: integer
+          example: "1:普通2:巨大"
+          description: "乳輪"
+        nipple_size:
+          type: integer
+          example: "1:普通2:巨大"
+          description: "乳首"
+        inverted_nipples:
+          type: integer
+          example: "1:普通2:陥没"
+          description: "陥没乳首"
+        public_hair:
+          type: integer
+          example: "1:あり2:なし"
+          description: "陰毛"
+        male_genital:
+          type: integer
+          example: "1:あり2:なし"
+          description: "男性器"
+        sheath_foreskin:
+          type: integer
+          example: "1:通常2:埋没3:包茎"
+          description: "埋没包茎"
+        genital_size:
+          type: integer
+          example: "1:普通2:太い3:長い4:巨根5:超根"
+          description: "男性器サイズ"
+        genital_details:
+          type: integer
+          example: "ＡＩ出力"
+          description: "男性器特徴"
+    COLORS:
+      type: object
+      description: ""
+      properties:
+        id:
+          type: integer
+          example: "ColorsID"
+        request_id:
+          type: integer
+          example: "requestID"
+
+        eyes_color:
+          type: string
+          example: "format: #FFFFFF"
+          description: "目色情報"
+        hair_color:
+          type: string
+          example: "format: #FFFFFF"
+          description: "髪色情報"
+        skin_color:
+          type: string
+          example: "format: #FFFFFF"
+          description: "肌色情報"
+        skin_sub_color:
+          type: string
+          example: "format: #FFFFFF"
+          description: "肌サブ色情報"
+        outfits_color:
+          type: string
+          example: "format: #FFFFFF"
+          description: "服装色情報"
+        outfits_sub_color:
+          type: string
+          example: "format: #FFFFFF"
+          description: "服装サブ色情報"
+        equips_color:
+          type: string
+          example: "format: #FFFFFF"
+          description: "所持品色情報"
+        equips_sub_color:
+          type: string
+          example: "format: #FFFFFF"
+          description: "所持品サブ色情報"
+        painting_color:
+          type: string
+          example: "format: #FFFFFF"
+          description: "ペイントカラー情報"
+    Requests:
+      type: object
+      description: "リクエスト情報"
+      properties:
+        id:
+          type: integer
+          example: "requestID"
+        task_id:
+          type: integer
+          example: "taskID"
+
+        basis_data:
+          description: "構成情報データ"
+          $ref: "#/components/schemas/BASIS"
+        faces_data:
+          description: "構成情報データ"
+          $ref: "#/components/schemas/FACES"
+        bodies_data:
+          description: "構成情報データ"
+          $ref: "#/components/schemas/BODIES"
+        colors_data:
+          description: "構成情報データ"
+          $ref: "#/components/schemas/COLORS"
